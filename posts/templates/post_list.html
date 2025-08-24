@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Все посты</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            line-height: 1.6;
+        }
+        .post {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .post h2 {
+            margin: 0;
+        }
+        .post a {
+            text-decoration: none;
+            color: #333;
+        }
+        .post a:hover {
+            color: #007bff;
+        }
+        .post small {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>📚 Список постов</h1>
+
+    {% for post in posts %}
+        <div class="post">
+            <h2>
+                <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+            </h2>
+            <small>Автор: {{ post.author.username }} | {{ post.created_at|date:"d.m.Y H:i" }}</small>
+            <p>{{ post.content.html|truncatewords_html:30|safe }}</p>
+        </div>
+    {% empty %}
+        <p>Нет постов.</p>
+    {% endfor %}
+</body>
+</html>
