@@ -1,48 +1,458 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Все посты</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог в стиле Medium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-text: #292929;
+            --secondary-text: #757575;
+            --accent-color: #1a8917;
+            --border-color: #e6e6e6;
+            --background: #ffffff;
+            --card-hover: #f8f8f8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 40px auto;
+            font-family: 'Inter', sans-serif;
+            color: var(--primary-text);
+            background-color: var(--background);
             line-height: 1.6;
-        }
-        .post {
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-        .post h2 {
+            padding: 0;
             margin: 0;
         }
-        .post a {
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.98);
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
             text-decoration: none;
-            color: #333;
         }
-        .post a:hover {
-            color: #007bff;
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
         }
-        .post small {
-            color: #666;
+        
+        .nav-links a {
+            color: var(--secondary-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-text);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .auth-buttons a {
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        
+        .login-btn {
+            color: var(--secondary-text);
+        }
+        
+        .signup-btn {
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        
+        .posts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        .post-card {
+            display: flex;
+            gap: 25px;
+            padding: 25px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s;
+            border-radius: 4px;
+        }
+        
+        .post-card:hover {
+            background-color: var(--card-hover);
+        }
+        
+        .post-content {
+            flex: 1;
+        }
+        
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+        }
+        
+        .author-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #ddd;
+        }
+        
+        .post-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        
+        .post-title a {
+            color: var(--primary-text);
+            text-decoration: none;
+        }
+        
+        .post-title a:hover {
+            color: var(--accent-color);
+        }
+        
+        .post-excerpt {
+            color: var(--secondary-text);
+            margin-bottom: 15px;
+            font-size: 1rem;
+            line-height: 1.5;
+            /* Ограничиваем текст 3 строками */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .post-tags {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .tag {
+            background: #f2f2f2;
+            color: var(--secondary-text);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+        
+        .tag:hover {
+            background: #e6e6e6;
+        }
+        
+        .post-stats {
+            display: flex;
+            gap: 15px;
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+        }
+        
+        .post-stats span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .post-image {
+            width: 200px;
+            height: 134px;
+            object-fit: cover;
+            border-radius: 4px;
+            background-color: #f0f0f0;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--secondary-text);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #e6e6e6;
+        }
+        
+        /* Footer */
+        footer {
+            background: #f9f9f9;
+            padding: 50px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column a {
+            color: var(--secondary-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .post-card {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .post-image {
+                width: 100%;
+                height: 200px;
+                order: -1;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                order: 3;
+                justify-content: center;
+                width: 100%;
+                padding-top: 15px;
+                border-top: 1px solid var(--border-color);
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .post-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .auth-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>📚 Список постов</h1>
-
-    {% for post in posts %}
-        <div class="post">
-            <h2>
-                <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
-            </h2>
-            <small>Автор: {{ post.author.username }} | {{ post.created_at|date:"d.m.Y H:i" }}</small>
-            <p>{{ post.content.html|truncatewords_html:30|safe }}</p>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Medium</a>
+                
+                <div class="nav-links">
+                    <a href="#">Главная</a>
+                    <a href="#">Подборки</a>
+                    <a href="#">Темы</a>
+                    <a href="#">Авторы</a>
+                </div>
+                
+                <div class="auth-buttons">
+                    <a href="#" class="login-btn">Войти</a>
+                    <a href="#" class="signup-btn">Регистрация</a>
+                </div>
+            </div>
         </div>
-    {% empty %}
-        <p>Нет постов.</p>
-    {% endfor %}
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <h1 class="page-title">Статьи</h1>
+            
+            <div class="posts-grid">
+                {% for post in posts %}
+                <!-- Post Card -->
+                <div class="post-card">
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <div class="author-avatar"></div>
+                            <span class="author-name">{{ post.author.username }}</span>
+                            <span>·</span>
+                            <span class="post-date">{{ post.created_at|date:"d E Y" }}</span>
+                        </div>
+                        
+                        <h2 class="post-title">
+                            <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+                        </h2>
+                        
+                        <div class="post-excerpt">
+                            {{ post.content.html|striptags|truncatewords:30 }}
+                        </div>
+                        
+                        <div class="post-footer">
+                            <div class="post-tags">
+                                <a href="#" class="tag">Технологии</a>
+                                <a href="#" class="tag">Программирование</a>
+                            </div>
+                            
+                            <div class="post-stats">
+                                <span><i class="far fa-heart"></i> 42</span>
+                                <span><i class="far fa-bookmark"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="post-image"></div>
+                </div>
+                {% empty %}
+                <div class="empty-state">
+                    <i class="fas fa-file-alt"></i>
+                    <h2>Пока нет постов</h2>
+                    <p>Будьте первым, кто опубликует статью!</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О платформе</h3>
+                    <ul>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Наша команда</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                        <li><a href="#">Партнеры</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Для авторов</h3>
+                    <ul>
+                        <li><a href="#">Начать писать</a></li>
+                        <li><a href="#">Партнерская программа</a></li>
+                        <li><a href="#">Рекомендации</a></li>
+                        <li><a href="#">Помощь</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Сообщество</h3>
+                    <ul>
+                        <li><a href="#">Рекомендации</a></li>
+                        <li><a href="#">Темы</a></li>
+                        <li><a href="#">Авторы</a></li>
+                        <li><a href="#">Сборники</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Правовая информация</h3>
+                    <ul>
+                        <li><a href="#">Условия использования</a></li>
+                        <li><a href="#">Политика конфиденциальности</a></li>
+                        <li><a href="#">Правила сообщества</a></li>
+                        <li><a href="#">Обратная связь</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 Medium Blog. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
