@@ -36,11 +36,6 @@
                     <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=random"
                          alt="{{ user.username }}"
                          class="w-9 h-9 rounded-full border">
-                {% else %}
-                    <a href="{% url 'login' %}" 
-                       class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
-                       Войти
-                    </a>
                 {% endif %}
             </div>
         </div>
