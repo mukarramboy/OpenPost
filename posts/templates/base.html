@@ -12,17 +12,20 @@
     <!-- Шрифты -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Иконки (Heroicons) -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafb;
+            background-color: #fafafa;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
     <!-- Навбар -->
-    <nav class="bg-white shadow-md fixed w-full z-50">
+    <nav class="backdrop-blur bg-white/80 shadow-sm fixed w-full z-50">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
             <!-- Логотип -->
             <a href="{% url 'post_list' %}" class="text-2xl font-bold text-blue-600">
@@ -30,12 +33,26 @@
             </a>
 
             <!-- Меню справа -->
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-6">
+                <a href="{% url 'post_list' %}" class="text-gray-700 hover:text-blue-600 flex items-center">
+                    <i data-feather="home" class="mr-1"></i> Главная
+                </a>
+                <a href="#" class="text-gray-700 hover:text-blue-600 flex items-center">
+                    <i data-feather="search" class="mr-1"></i> Поиск
+                </a>
                 {% if user.is_authenticated %}
-                    <span class="text-gray-700">Привет, {{ user.username }}</span>
-                    <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=random"
-                         alt="{{ user.username }}"
-                         class="w-9 h-9 rounded-full border">
+                    <!-- Выпадающее меню профиля -->
+                    <div class="relative group">
+                        <button class="flex items-center focus:outline-none">
+                            <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=random"
+                                alt="{{ user.username }}"
+                                class="w-9 h-9 rounded-full border">
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg hidden group-hover:block">
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Профиль</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Настройки</a>
+                        </div>
+                    </div>
                 {% endif %}
             </div>
         </div>
@@ -47,9 +64,17 @@
     </main>
 
     <!-- Футер -->
-    <footer class="bg-white border-t text-center py-4 text-gray-500 text-sm">
-        © {{ now|date:"Y" }} MyBlog. Сделано с ❤️ на Django.
+    <footer class="bg-white border-t py-4 text-center text-gray-500 text-sm">
+        <div class="flex justify-center space-x-6 mb-2">
+            <a href="#" class="hover:text-blue-600"><i data-feather="instagram"></i></a>
+            <a href="#" class="hover:text-blue-600"><i data-feather="twitter"></i></a>
+            <a href="#" class="hover:text-blue-600"><i data-feather="github"></i></a>
+        </div>
+        <p>© {{ now|date:"Y" }} MyBlog. Сделано с ❤️ на Django.</p>
     </footer>
 
+    <script>
+        feather.replace()
+    </script>
 </body>
 </html>
