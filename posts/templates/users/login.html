@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+{% load static %}
+
+{% block title %}Вход | MyBlog{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-[70vh]">
+    <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Войти в аккаунт</h2>
+
+        <form method="post" class="space-y-5">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Имя пользователя</label>
+                {{ form.username }}
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Пароль</label>
+                {{ form.password }}
+            </div>
+
+            <button type="submit"
+                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-medium">
+                Войти
+            </button>
+        </form>
+
+        <!-- Разделитель -->
+        <div class="flex items-center my-6">
+            <div class="flex-1 h-px bg-gray-300"></div>
+            <span class="px-3 text-gray-500 text-sm">или</span>
+            <div class="flex-1 h-px bg-gray-300"></div>
+        </div>
+
+        <!-- Кнопка Google -->
+        <a href="{% provider_login_url 'google' %}"
+           class="flex items-center justify-center gap-3 border border-gray-300 py-2 rounded-lg hover:bg-gray-100 transition w-full">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
+                 alt="Google" class="w-5 h-5">
+            <span class="text-gray-700 font-medium">Войти через Google</span>
+        </a>
+
+    </div>
+</div>
+{% endblock %}
