@@ -33,6 +33,17 @@ INSTALLED_APPS = [
     "posts",
 ]
 
+SOCIALLOGIN_PROVIDERS = {
+    "google": {
+        'APP': {
+            'client_id': config("GOOGLE_CLIENT_ID"),
+            'secret': config("GOOGLE_SECRET"),
+            'key': ''
+        }
+    }
+}
+
+
 SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
