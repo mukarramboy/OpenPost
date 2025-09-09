@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Главная | MyBlog{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20 px-6 rounded-2xl shadow-lg mb-16">
+    <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-5xl font-extrabold mb-6 drop-shadow-lg">
+            Добро пожаловать в <span class="text-yellow-300">MyBlog</span>
+        </h1>
+        <p class="text-lg sm:text-xl text-blue-100 mb-8">
+            Здесь я делюсь мыслями, проектами и историями о программировании, технологиях и жизни.
+        </p>
+        <a href="{% url 'post_list' %}"
+           class="px-8 py-4 bg-yellow-400 text-gray-900 rounded-xl font-semibold shadow-md hover:bg-yellow-300 transition">
+            Читать посты
+        </a>
+    </div>
+</section>
+
+<!-- О блоге -->
+<section class="max-w-5xl mx-auto px-6 py-12 text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-12">Что тебя ждёт в блоге?</h2>
+
+    <div class="grid md:grid-cols-3 gap-10">
+        <div class="p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition">
+            <div class="text-5xl mb-4">📖</div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Посты</h3>
+            <p class="text-gray-600 text-sm">Личные заметки, статьи и мои проекты.</p>
+        </div>
+
+        <div class="p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition">
+            <div class="text-5xl mb-4">💡</div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Идеи</h3>
+            <p class="text-gray-600 text-sm">Размышления о технологиях и новых возможностях.</p>
+        </div>
+
+        <div class="p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition">
+            <div class="text-5xl mb-4">🚀</div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Рост</h3>
+            <p class="text-gray-600 text-sm">Этот блог — часть моего пути программиста.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Цитата -->
+<section class="bg-gray-100 py-12 mt-16 rounded-2xl shadow-inner">
+    <div class="max-w-3xl mx-auto text-center">
+        <p class="text-xl italic text-gray-700 mb-4">
+            «Код — это поэзия, написанная для компьютеров, но прочитанная людьми.»
+        </p>
+        <span class="text-gray-500">— Аноним</span>
+    </div>
+</section>
+{% endblock %}
